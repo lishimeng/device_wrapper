@@ -2,7 +2,7 @@ package com.thingple.tagservice.device;
 
 import android.content.Context;
 
-import com.thingple.tagservice.device.vendor.AbstructDevice;
+import com.thingple.tagservice.device.vendor.AbstractDevice;
 
 import java.lang.reflect.Constructor;
 
@@ -21,7 +21,7 @@ public class DeviceManager {
 
     private IDevice device;
 
-    public static Class<? extends AbstructDevice> clazz;
+    public static Class<? extends AbstractDevice> clazz;
 
     public static void init(Context context) {
         if (ins == null) {
@@ -54,7 +54,7 @@ public class DeviceManager {
 
     private IDevice createDevice() {
         try {
-            Constructor<? extends AbstructDevice> constructor = clazz.getConstructor(Context.class);
+            Constructor<? extends AbstractDevice> constructor = clazz.getConstructor(Context.class);
             device = constructor.newInstance(context);
         } catch (Exception e) {
 
