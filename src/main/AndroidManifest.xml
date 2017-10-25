@@ -9,6 +9,10 @@
         <activity android:name="com.thingple.tagservice.view.InventoryActivity" />
         <activity android:name="com.thingple.tagservice.view.ReadCardActivity" />
         <activity android:name="com.thingple.tagservice.view.WriteCardActivity"></activity>
+        <service
+            android:name="com.thingple.tagservice.IDeviceService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

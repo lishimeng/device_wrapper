@@ -9,7 +9,7 @@ import com.thingple.tagservice.device.IDevice;
  * 设备
  * Created by lism on 2017/7/28.
  */
-public abstract class AbstructDevice implements IDevice {
+public abstract class AbstractDevice implements IDevice {
 
     protected Context context;
 
@@ -18,7 +18,7 @@ public abstract class AbstructDevice implements IDevice {
 
     private long lastVisit = -1;
 
-    public AbstructDevice(Context context) {
+    public AbstractDevice(Context context) {
         lastVisit = System.currentTimeMillis();
         this.context = context.getApplicationContext();
     }
