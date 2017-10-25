@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thingple.tagservice">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+        <activity android:name="com.thingple.tagservice.view.InventoryActivity" />
+        <activity android:name="com.thingple.tagservice.view.ReadCardActivity" />
+        <activity android:name="com.thingple.tagservice.view.WriteCardActivity"></activity>
+    </application>
+
+</manifest>
