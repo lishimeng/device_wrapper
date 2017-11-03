@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.thingple.tagservice.device.DeviceContext;
 import com.thingple.tagservice.device.DeviceManager;
-import com.thingple.tagservice.settings.PreferencesUtil;
 
 
 /**
@@ -31,13 +30,6 @@ public class DeviceApp extends Application {
 
         startDevice();
         DeviceManager.init(this.getApplicationContext());
-        Context context = getApplicationContext();
-        try{
-            context = createPackageContext("com.thingple.app.plugin.plugins", CONTEXT_IGNORE_SECURITY);
-        } catch (Exception e) {
-            Log.e(getClass().getName() + "#onCreate", "不能创建主程序的package", e);
-        }
-        PreferencesUtil.init(context);
 
     }
 
