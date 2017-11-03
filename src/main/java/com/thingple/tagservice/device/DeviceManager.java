@@ -1,6 +1,7 @@
 package com.thingple.tagservice.device;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.thingple.tagservice.device.vendor.AbstractDevice;
 
@@ -57,10 +58,10 @@ public class DeviceManager {
             Constructor<? extends AbstractDevice> constructor = clazz.getConstructor(Context.class);
             device = constructor.newInstance(context);
         } catch (Exception e) {
-
+            Log.e(getClass().getName() + "#createDevice", "Failed to create device instance", e);
         }
 
-        return null;
+        return device;
     }
 
     public void destroySelf() {
