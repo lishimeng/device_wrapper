@@ -15,7 +15,8 @@ public class InventoryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        doInventory(getApp());
+        getIntent().getExtras();
+        doInventory(getApp(), getPower());
     }
 
     private DeviceContext getDeviceContext(final DeviceApp app) {
@@ -26,12 +27,12 @@ public class InventoryActivity extends BaseActivity {
         return deviceContext;
     }
 
-    private void doInventory(final DeviceApp app) {
+    private void doInventory(final DeviceApp app, final int power) {
         Bundle bundle = getIntent().getExtras();
         String filter = null;
         if (bundle != null) {
             filter = bundle.getString("filter");
-            filter = filter.trim().equals("") ? null : filter;
+            filter = filter == null || filter.trim().equals("") ? null : filter;
         }
         final String filterExp = filter;
         final Handler handler = new Handler();
@@ -41,7 +42,7 @@ public class InventoryActivity extends BaseActivity {
                 DeviceContext deviceContext = getDeviceContext(app);
                 if (deviceContext != null) {
                     Log.d("inventory_view", "-->设备正常,开始Inventory");
-                    deviceContext.inventoryStart(filterExp);
+                    deviceContext.inventoryStart(filterExp, power);
                     finish();
                 } else {
                     Log.d("inventory_view", "等待设备启动");

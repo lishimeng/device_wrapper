@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.thingple.tagservice.ReadCardHandler;
 import com.thingple.tagservice.ReadCardListener;
-import com.thingple.tagservice.settings.PreferencesUtil;
 
 /**
  * Device控制器
@@ -24,7 +23,7 @@ public class DeviceContext extends AbstractDeviceContext {
     /**
      * 开始盘点操作
      */
-    public void inventoryStart(String filterExp) {
+    public void inventoryStart(String filterExp, int power) {
         IDevice device = getAvailableDevice();
         if (device == null) {
             return;
@@ -32,10 +31,10 @@ public class DeviceContext extends AbstractDeviceContext {
 
         notify.start();
 
-        Handler inventoryHandler =  new Handler() {
+        Handler inventoryHandler = new Handler(new Handler.Callback() {
 
             @Override
-            public void handleMessage(Message msg) {
+            public boolean handleMessage(Message msg) {
                 if (msg.what == IDevice.MEG) {
 
                     Bundle bundle = msg.getData();
@@ -43,9 +42,10 @@ public class DeviceContext extends AbstractDeviceContext {
                     String epc = bundle.getString("EPC");
                     onInventory(tid, epc);
                 }
+                return false;
             }
-        };
-        device.configPower(PreferencesUtil.shareInstance().getHightPower());
+        });
+        device.configPower(power);
         device.startInventory(inventoryHandler, filterExp);
         inventoryListen();
     }
@@ -72,14 +72,14 @@ public class DeviceContext extends AbstractDeviceContext {
         }, 500);
     }
 
-    public void inventoryOnce(ReadCardListener callback, String filterExp) {
+    public void inventoryOnce(ReadCardListener callback, String filterExp, int power) {
 
         IDevice device = getAvailableDevice();
         if (device == null) {
             return;
         }
 
-        device.configPower(PreferencesUtil.shareInstance().getLowPower());
+        device.configPower(power);
         device.startInventory(new ReadCardHandler((callback)), filterExp);
     }
 

@@ -23,4 +23,8 @@ public abstract class AbstractDevice implements IDevice {
         this.context = context.getApplicationContext();
     }
 
+    @Override
+    public boolean writeCard(String epc, String data, String passwd) {
+        return writeCard(epc, TagArea.EPC, data, passwd);
+    }
 }

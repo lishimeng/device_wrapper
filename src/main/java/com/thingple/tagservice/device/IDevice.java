@@ -2,6 +2,8 @@ package com.thingple.tagservice.device;
 
 import android.os.Handler;
 
+import com.thingple.tagservice.device.vendor.TagArea;
+
 /**
  * 设备定义
  * Created by lism on 2017/7/27.
@@ -35,7 +37,7 @@ public interface IDevice {
 
     /**
      * 设备状态打开
-     * @return
+     * @return 0:打开
      */
     boolean isOpened();
 
@@ -45,4 +47,23 @@ public interface IDevice {
     void closeDevice();
 
     long lastVisit();
+
+    /**
+     * 写卡
+     * @param epc 当前epc
+     * @param area 写卡的区域
+     * @param data 写入数据
+     * @param passwd 密码
+     * @return true/false
+     */
+    boolean writeCard(String epc, TagArea area, String data, String passwd);
+
+    /**
+     * 写卡/默认epc
+     * @param epc 当前epc
+     * @param data 写入数据
+     * @param passwd 密码
+     * @return true/false
+     */
+    boolean writeCard(String epc, String data, String passwd);
 }

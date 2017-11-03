@@ -22,7 +22,7 @@ public class ReadCardActivity extends BaseActivity {
         setContentView(R.layout.activity_read_card);
 
         DeviceApp app = this.getApp();
-        doReadCard(app);
+        doReadCard(app, getPower());
     }
 
     public void cancelInventory(View view) {
@@ -41,7 +41,7 @@ public class ReadCardActivity extends BaseActivity {
 
     private ReadCardListener createListener() {
 
-        ReadCardListener listener = new ReadCardListener() {
+        return new ReadCardListener() {
             private AtomicBoolean flag = new AtomicBoolean(false);
 
             @Override
@@ -59,7 +59,6 @@ public class ReadCardActivity extends BaseActivity {
                 }
             }
         };
-        return listener;
     }
 
     private DeviceContext getDeviceContext(final DeviceApp app) {
@@ -70,12 +69,12 @@ public class ReadCardActivity extends BaseActivity {
         return deviceContext;
     }
 
-    private void doReadCard(final DeviceApp app) {
+    private void doReadCard(final DeviceApp app, final int power) {
         Bundle bundle = getIntent().getExtras();
         String filter = null;
         if (bundle != null) {
             filter = bundle.getString("filter");
-            filter = filter.trim().equals("") ? null : filter;
+            filter = filter == null || filter.trim().equals("") ? null : filter;
         }
         final String filterExp = filter;
 
@@ -88,7 +87,7 @@ public class ReadCardActivity extends BaseActivity {
                     TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
                     lableStatus.setText(R.string.status_reading);
                     ReadCardListener listener = createListener();
-                    deviceContext.inventoryOnce(listener, filterExp);
+                    deviceContext.inventoryOnce(listener, filterExp, power);
                 } else {
                     TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
                     lableStatus.setText(R.string.status_initial);
