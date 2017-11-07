@@ -1,5 +1,6 @@
 package com.thingple.tagservice;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
@@ -16,6 +17,10 @@ public class IDeviceService extends Service {
 
     private IBinder binder;
 
+    private NotificationManager notificationManager;
+
+    private int notifyId = 1;
+
     public IDeviceService() {
     }
 
@@ -23,15 +28,21 @@ public class IDeviceService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (mNotificationManager != null) {
+        notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
 
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                    this);
-            mBuilder.setContentTitle(/*getString(R.string.notification_title)*/ "TITLE");
-            mBuilder.setContentText(/*getString(R.string.notification_content)*/ "CONTENT");
-            //mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-            mNotificationManager.notify(1, mBuilder.build());
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            Notification notification = builder.setWhen(System.currentTimeMillis())
+                    .setContentTitle("Tag")
+                    .setContentText("Inventory正在执行")
+                    .setTicker("Inventory正在执行")
+                    .setDefaults(Notification.DEFAULT_SOUND)
+                    .setOngoing(true)
+                    .setAutoCancel(true)
+                    .build();
+            notification.flags |= Notification.FLAG_NO_CLEAR;
+
+            this.notificationManager.notify(notifyId, notification);
         }
     }
 
@@ -48,5 +59,13 @@ public class IDeviceService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         flags = START_STICKY;
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (notificationManager != null) {
+            notificationManager.cancel(notifyId);
+        }
     }
 }
