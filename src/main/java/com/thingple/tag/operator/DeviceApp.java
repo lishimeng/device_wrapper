@@ -1,4 +1,4 @@
-package com.thingple.tagservice;
+package com.thingple.tag.operator;
 
 import android.app.Application;
 import android.app.Service;
@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.thingple.tagservice.IDeviceService;
 import com.thingple.tagservice.device.DeviceContext;
 import com.thingple.tagservice.device.DeviceManager;
 

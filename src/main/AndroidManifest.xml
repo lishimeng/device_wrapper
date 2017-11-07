@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">
-        <activity android:name="com.thingple.tagservice.view.InventoryActivity" />
-        <activity android:name="com.thingple.tagservice.view.ReadCardActivity" />
-        <activity android:name="com.thingple.tagservice.view.WriteCardActivity"></activity>
+        <activity android:name="com.thingple.tagservice.view.InventoryActivity" android:exported="true" />
+        <activity android:name="com.thingple.tagservice.view.ReadCardActivity" android:exported="true" />
+        <activity android:name="com.thingple.tagservice.view.WriteCardActivity" android:exported="true" />
         <service
             android:name="com.thingple.tagservice.IDeviceService"
             android:enabled="true"
