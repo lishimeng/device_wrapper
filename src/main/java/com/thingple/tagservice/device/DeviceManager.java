@@ -20,7 +20,7 @@ public class DeviceManager {
 
     private Context context;
 
-    private IDevice device;
+    public IDevice device;
 
     public static Class<? extends AbstractDevice> clazz;
 
