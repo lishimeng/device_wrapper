@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.thingple.tagservice.DeviceApp;
-import com.thingple.tagservice.R;
+import com.thingple.tag.operator.DeviceApp;
+import com.thingple.tag.wrapper.R;
 import com.thingple.tagservice.device.DeviceContext;
 
 

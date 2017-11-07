@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.thingple.tagservice.DeviceApp;
+import com.thingple.tag.operator.DeviceApp;
+
 
 /**
  * view基础类
