@@ -45,6 +45,9 @@ public class DeviceContext extends AbstractDeviceContext {
                 return false;
             }
         });
+        if (!device.isOpened()) {
+            device.openDevice();
+        }
         device.configPower(power);
         device.startInventory(inventoryHandler, filterExp);
         inventoryListen();
