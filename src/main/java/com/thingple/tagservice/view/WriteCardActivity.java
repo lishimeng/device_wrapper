@@ -29,7 +29,7 @@ public class WriteCardActivity extends BaseActivity {
     }
 
     public void cancelOperate(View view) {
-        resultToParent(0, "");
+        resultToParent(9, "canceled");
     }
 
     private void resultToParent(int code, String message) {
@@ -85,12 +85,12 @@ public class WriteCardActivity extends BaseActivity {
             public void run() {
                 DeviceContext deviceContext = getDeviceContext(app);
                 if (deviceContext != null) {
-                    TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
-                    lableStatus.setText(R.string.status_reading);
+                    TextView lableStatus = (TextView) findViewById(R.id.label_write_status);
+                    lableStatus.setText(R.string.status_writing);
                     WriteCardListener listener = createListener();
                     deviceContext.writeCard(listener, filter, data, passwd, power);
                 } else {
-                    TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
+                    TextView lableStatus = (TextView) findViewById(R.id.label_write_status);
                     lableStatus.setText(R.string.status_initial);
                     handler.postDelayed(this, 500);
                 }

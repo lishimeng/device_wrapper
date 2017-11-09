@@ -7,7 +7,7 @@
     tools:context="com.thingple.tagservice.view.WriteCardActivity">
 
     <TextView
-        android:id="@+id/label_read_status"
+        android:id="@+id/label_write_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

@@ -4,4 +4,5 @@
     <string name="read_card_label">读卡</string>
     <string name="status_reading">读卡</string>
     <string name="status_initial">设备启动</string>
+    <string name="status_writing">写卡</string>
 </resources>
