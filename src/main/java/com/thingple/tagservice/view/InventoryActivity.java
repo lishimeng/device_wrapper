@@ -19,14 +19,6 @@ public class InventoryActivity extends BaseActivity {
         doInventory(getApp(), getPower());
     }
 
-    private DeviceContext getDeviceContext(final DeviceApp app) {
-        DeviceContext deviceContext = null;
-        if (app != null) {
-            deviceContext = app.getDeviceContext();
-        }
-        return deviceContext;
-    }
-
     private void doInventory(final DeviceApp app, final int power) {
         Bundle bundle = getIntent().getExtras();
         String filter = null;

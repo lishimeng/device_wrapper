@@ -2,6 +2,7 @@ package com.thingple.tagservice.device.vendor;
 
 import android.content.Context;
 
+import com.thingple.tagservice.WriteCardListener;
 import com.thingple.tagservice.device.IDevice;
 
 
@@ -16,7 +17,7 @@ public abstract class AbstractDevice implements IDevice {
     private boolean inInventory = false;
     private boolean opened = false;
 
-    private long lastVisit = -1;
+    protected long lastVisit = -1;
 
     public AbstractDevice(Context context) {
         lastVisit = System.currentTimeMillis();
@@ -24,7 +25,11 @@ public abstract class AbstractDevice implements IDevice {
     }
 
     @Override
-    public boolean writeCard(String epc, String data, String passwd) {
-        return writeCard(epc, TagArea.EPC, data, passwd);
+    public void writeCard(String epc, String data, String passwd, WriteCardListener callback) {
+        writeCard(epc, TagArea.EPC, data, passwd, callback);
+    }
+
+    protected void mardVisit() {
+        this.lastVisit = System.currentTimeMillis();
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.thingple.tagservice.ReadCardHandler;
 import com.thingple.tagservice.ReadCardListener;
+import com.thingple.tagservice.WriteCardListener;
 
 /**
  * Device控制器
@@ -94,6 +95,15 @@ public class DeviceContext extends AbstractDeviceContext {
         IDevice device = DeviceManager.shareInstance().getDevice();
         if (device != null) {
             device.stopInventory();
+        }
+    }
+
+    public void writeCard(final WriteCardListener callback, String epcForSelect, String data, String password, int power) {
+
+        IDevice device = DeviceManager.shareInstance().getDevice();
+        if (device != null) {
+            device.configPower(power);
+            device.writeCard(epcForSelect, data, password, callback);
         }
     }
 

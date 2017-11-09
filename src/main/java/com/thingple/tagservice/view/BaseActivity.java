@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.thingple.tag.operator.DeviceApp;
+import com.thingple.tagservice.device.DeviceContext;
 
 
 /**
@@ -42,5 +43,13 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         return power;
+    }
+
+    protected DeviceContext getDeviceContext(final DeviceApp app) {
+        DeviceContext deviceContext = null;
+        if (app != null) {
+            deviceContext = app.getDeviceContext();
+        }
+        return deviceContext;
     }
 }

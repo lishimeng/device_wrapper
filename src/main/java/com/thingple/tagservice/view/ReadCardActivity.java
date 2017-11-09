@@ -61,14 +61,6 @@ public class ReadCardActivity extends BaseActivity {
         };
     }
 
-    private DeviceContext getDeviceContext(final DeviceApp app) {
-        DeviceContext deviceContext = null;
-        if (app != null) {
-            deviceContext = app.getDeviceContext();
-        }
-        return deviceContext;
-    }
-
     private void doReadCard(final DeviceApp app, final int power) {
         Bundle bundle = getIntent().getExtras();
         String filter = null;
