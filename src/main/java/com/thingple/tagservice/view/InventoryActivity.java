@@ -1,5 +1,8 @@
 package com.thingple.tagservice.view;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,6 +38,7 @@ public class InventoryActivity extends BaseActivity {
                 if (deviceContext != null) {
                     Log.d("inventory_view", "-->设备正常,开始Inventory");
                     deviceContext.inventoryStart(filterExp, power);
+                    setResult(Activity.RESULT_OK);
                     finish();
                 } else {
                     Log.d("inventory_view", "等待设备启动");

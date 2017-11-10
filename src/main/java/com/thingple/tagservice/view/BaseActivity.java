@@ -35,7 +35,10 @@ public class BaseActivity extends AppCompatActivity {
             if (intent != null) {
                 Bundle bundle = intent.getExtras();
                 if (bundle != null) {
-                    power = bundle.getInt("power");
+                    int p = bundle.getInt("power");
+                    if (p > 0) {
+                        power = p;
+                    }
                 }
             }
         } catch (Exception e) {
