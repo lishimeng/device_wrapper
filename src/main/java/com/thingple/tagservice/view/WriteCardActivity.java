@@ -3,14 +3,12 @@ package com.thingple.tagservice.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresPermission;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.thingple.tag.operator.DeviceApp;
 import com.thingple.tag.wrapper.R;
-import com.thingple.tagservice.ReadCardListener;
 import com.thingple.tagservice.WriteCardListener;
 import com.thingple.tagservice.device.DeviceContext;
 
