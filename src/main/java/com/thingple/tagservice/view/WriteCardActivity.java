@@ -27,14 +27,15 @@ public class WriteCardActivity extends BaseActivity {
     }
 
     public void cancelOperate(View view) {
-        resultToParent(9, "canceled");
+        resultToParent(9, "canceled", "");
     }
 
-    private void resultToParent(int code, String message) {
+    private void resultToParent(int code, String message, String tid) {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putString("code", "" + code);
         bundle.putString("message", message);
+        bundle.putString("tid", tid);
         intent.putExtras(bundle);
         setResult(0, intent);
         finish();
@@ -46,11 +47,11 @@ public class WriteCardActivity extends BaseActivity {
             private AtomicBoolean flag = new AtomicBoolean(false);
 
             @Override
-            public void afterWriteCard(int code, String message) {
+            public void afterWriteCard(int code, String message, String tid) {
 
                 if (!flag.getAndSet(true)) {// 只返回一次
                     Log.d("#WriteCard", "返回数据并关闭界面");
-                    resultToParent(code, message);
+                    resultToParent(code, message, tid);
                 }
             }
         };
@@ -71,7 +72,7 @@ public class WriteCardActivity extends BaseActivity {
                 || epcForSelect.trim().equals("")
                 || epcForWrite == null
                 || epcForWrite.trim().equals("")) {
-            resultToParent(-1, "缺少参数");
+            resultToParent(-1, "缺少参数", "");
         }
         final String filter = epcForSelect;
         final String data = epcForWrite;

@@ -18,8 +18,8 @@ public class AbstractDeviceContext extends Binder {
     static final String INVENTORY_PERMISSION = "com.thingple.tag.permission.inventory";
     static final String INVENTORY_ACTION = "com.thingple.tag.inventory";
 
-    private static final String INVENTORY_HEARTBEAT_PERMISSION = "com.thingple.tag.permission.heartbeat";
-    private static final String INVENTORY_HEARTBEAT_ACTION = "com.thingple.tag.heartbeat";
+    private static String INVENTORY_HEARTBEAT_PERMISSION = "com.thingple.tag.permission.heartbeat";
+    private static String INVENTORY_HEARTBEAT_ACTION = "com.thingple.tag.heartbeat";
 
     private Context context;
 

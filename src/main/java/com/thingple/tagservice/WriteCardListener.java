@@ -7,5 +7,5 @@ package com.thingple.tagservice;
  */
 public interface WriteCardListener {
 
-    void afterWriteCard(int code, String message);
+    void afterWriteCard(int code, String message, String tid);
 }
