@@ -36,7 +36,7 @@ public class InventoryActivity extends BaseActivity {
                 if (deviceContext != null) {
                     Log.d("inventory_view", "-->设备正常,开始Inventory");
                     deviceContext.inventoryStart(filterExp, power);
-                    setResult(Activity.RESULT_OK);
+                    setResult(0);
                     finish();
                 } else {
                     Log.d("inventory_view", "等待设备启动");
