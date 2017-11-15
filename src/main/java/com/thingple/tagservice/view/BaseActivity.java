@@ -16,6 +16,8 @@ import com.thingple.tagservice.device.DeviceContext;
 
 public class BaseActivity extends AppCompatActivity {
 
+    private static String TAG = "Reader";
+
     private DeviceApp app;
 
     @Override
@@ -38,11 +40,12 @@ public class BaseActivity extends AppCompatActivity {
                     int p = bundle.getInt("power");
                     if (p > 0) {
                         power = p;
+                        Log.d(TAG + "#getPower", "指定本次操作功率值:" + power);
                     }
                 }
             }
         } catch (Exception e) {
-            Log.e(getClass().getName() + "#getPower", "获取功率参数失败", e);
+            Log.e(TAG + "#getPower", "获取功率参数失败", e);
         }
 
         return power;
