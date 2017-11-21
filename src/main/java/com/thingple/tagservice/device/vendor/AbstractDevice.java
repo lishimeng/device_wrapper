@@ -64,6 +64,7 @@ public abstract class AbstractDevice implements IDevice {
     }
 
     public void preInventory() {
+        Log.d("preInventory", "init inventory");
         map = new HashMap<>();
     }
 
@@ -74,16 +75,16 @@ public abstract class AbstractDevice implements IDevice {
             long now = System.currentTimeMillis();
             if (latestVisitTime != null && (now - latestVisitTime) > 500) {
                 map.put(tagInfo.epc, now);
-                processData(handler, tagInfo);
+                processTag(handler, tagInfo);
             }
         } else {
-            processData(handler, tagInfo);
+            processTag(handler, tagInfo);
         }
 
     }
 
-    private void processData(final Handler handler, final TagInfo tagInfo) {
-        Log.d(getClass().getName() + "#handleMessage", "读到标签 tid:" + tagInfo.tid + "\tepc:" + tagInfo.epc);
+    private void processTag(final Handler handler, final TagInfo tagInfo) {
+        Log.d(getClass().getName() + "#processTag", "读到标签 tid:" + tagInfo.tid + "\tepc:" + tagInfo.epc);
         TagMessageBuilder.newInstance().tid(tagInfo.tid).epc(tagInfo.epc).rssi(tagInfo.rssi).build(handler);
     }
 }
