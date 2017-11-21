@@ -42,7 +42,7 @@ public abstract class AbstractDevice implements IDevice {
         writeCard(epc, TagArea.EPC, data, passwd, callback);
     }
 
-    protected void mardVisit() {
+    public void markVisit() {
         this.lastVisit = System.currentTimeMillis();
     }
 

@@ -74,9 +74,14 @@ public class DeviceContext extends AbstractDeviceContext {
                 long now = System.currentTimeMillis();
                 long lastTime = heartBeatReciever.lastTime;
                 long idle = now - lastTime;
-                if (idle >= 1000) {
+                if (idle >= 2000) {
                     inventoryStop();
                 } else {
+                    IDevice device = DeviceManager.shareInstance().getDevice();
+                    if (device != null && device instanceof AbstractDevice) {
+                        AbstractDevice abstractDevice = (AbstractDevice) device;
+                        abstractDevice.markVisit();
+                    }
                     handler.postDelayed(this, 300);
                 }
             }
