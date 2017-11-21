@@ -10,8 +10,8 @@ import com.thingple.tagservice.device.IDevice;
 import com.thingple.tagservice.device.TagInfo;
 import com.thingple.tagservice.device.TagMessageBuilder;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 
 /**
@@ -26,7 +26,7 @@ public abstract class AbstractDevice implements IDevice {
 
     private static byte[] defaultPassword = new byte[4];
 
-    public Map<String, Long> map = null;
+    private Map<String, Long> map = null;
 
     static {
         Common.hexStr2Bytes("00000000", defaultPassword, 0, 4);
@@ -61,6 +61,10 @@ public abstract class AbstractDevice implements IDevice {
             pwd = defaultPassword;
         }
         return pwd;
+    }
+
+    public void preInventory() {
+        map = new HashMap<>();
     }
 
     protected void onTag(final Handler handler, final TagInfo tagInfo) {

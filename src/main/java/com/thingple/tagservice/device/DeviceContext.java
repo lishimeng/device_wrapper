@@ -12,7 +12,6 @@ import com.thingple.tagservice.ReadCardListener;
 import com.thingple.tagservice.WriteCardListener;
 import com.thingple.tagservice.device.vendor.AbstractDevice;
 
-import java.util.HashMap;
 
 /**
  * Device控制器
@@ -55,7 +54,7 @@ public class DeviceContext extends AbstractDeviceContext {
         device.configPower(power);
         if (device instanceof AbstractDevice) {
             AbstractDevice abstractDevice = (AbstractDevice) device;
-            abstractDevice.map = new HashMap<>();
+            abstractDevice.preInventory();
         }
         device.startInventory(inventoryHandler, filterExp);
         inventoryListen();
@@ -74,9 +73,10 @@ public class DeviceContext extends AbstractDeviceContext {
                 long now = System.currentTimeMillis();
                 long lastTime = heartBeatReciever.lastTime;
                 long idle = now - lastTime;
-                if (idle >= 2000) {
+                if (idle >= 1400) {
                     inventoryStop();
                 } else {
+                    // mark visit time
                     IDevice device = DeviceManager.shareInstance().getDevice();
                     if (device != null && device instanceof AbstractDevice) {
                         AbstractDevice abstractDevice = (AbstractDevice) device;
