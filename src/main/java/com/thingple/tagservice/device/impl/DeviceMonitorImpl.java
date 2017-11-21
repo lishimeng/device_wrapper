@@ -29,7 +29,7 @@ public class DeviceMonitorImpl implements DeviceMonitor {
                 started = false;
                 return;
             }
-            IDevice device = DeviceManager.shareInstance().getDevice();
+            IDevice device = DeviceManager.shareInstance().device;
             if (device == null) {
                 Log.d(getClass().getName() + "", "设备监控器:设备已经关闭,停止监控");
                 return;
