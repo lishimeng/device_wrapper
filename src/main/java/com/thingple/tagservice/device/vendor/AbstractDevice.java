@@ -70,21 +70,26 @@ public abstract class AbstractDevice implements IDevice {
 
     protected void onTag(final Handler handler, final TagInfo tagInfo) {
 
-        Log.d("onTag", "Tag_EPC:" + tagInfo.epc);
+        long now = System.currentTimeMillis();
         if (map != null) {
             Long latestVisitTime = map.get(tagInfo.epc);
-            long now = System.currentTimeMillis();
-            if (latestVisitTime != null && (now - latestVisitTime) > 500) {
-                processTag(handler, tagInfo);
+            if (latestVisitTime == null) {// 首次
+                processTag(handler, tagInfo, now);
+            } else {
+                if ((now - latestVisitTime) > 500) {// 超过500millisecond
+                    processTag(handler, tagInfo, now);
+                }
             }
-            map.put(tagInfo.epc, now);
         } else {
-            processTag(handler, tagInfo);
+            processTag(handler, tagInfo, now);
         }
 
     }
 
-    private void processTag(final Handler handler, final TagInfo tagInfo) {
+    private void processTag(final Handler handler, final TagInfo tagInfo, final long processTime) {
+        if (map != null) {
+            map.put(tagInfo.epc, processTime);
+        }
         Log.d(getClass().getName() + "#processTag", "读到标签 tid:" + tagInfo.tid + "\tepc:" + tagInfo.epc);
         TagMessageBuilder.newInstance().tid(tagInfo.tid).epc(tagInfo.epc).rssi(tagInfo.rssi).build(handler);
     }
