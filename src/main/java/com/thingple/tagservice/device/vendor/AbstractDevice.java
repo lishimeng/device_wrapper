@@ -70,13 +70,14 @@ public abstract class AbstractDevice implements IDevice {
 
     protected void onTag(final Handler handler, final TagInfo tagInfo) {
 
+        Log.d("onTag", "Tag_EPC:" + tagInfo.epc);
         if (map != null) {
             Long latestVisitTime = map.get(tagInfo.epc);
             long now = System.currentTimeMillis();
             if (latestVisitTime != null && (now - latestVisitTime) > 500) {
-                map.put(tagInfo.epc, now);
                 processTag(handler, tagInfo);
             }
+            map.put(tagInfo.epc, now);
         } else {
             processTag(handler, tagInfo);
         }
