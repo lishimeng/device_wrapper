@@ -44,6 +44,7 @@ public class DeviceManager {
         if (device == null) {
             synchronized (lock) {
                 initDevice(category);
+                device = getCachedDevice(category);
             }
         }
         return device;
