@@ -33,7 +33,11 @@ public abstract class AbstractDevice implements IDevice {
 
     private DeviceMonitor monitor;
 
+    private long createTime = System.currentTimeMillis();
+
     private String deviceId = "";
+
+    private String category;
 
     static {
         Common.hexStr2Bytes("00000000", defaultPassword, 0, 4);
@@ -41,7 +45,7 @@ public abstract class AbstractDevice implements IDevice {
 
     public AbstractDevice(Context context) {
         lastVisit = System.currentTimeMillis();
-        deviceId = System.currentTimeMillis() + "";
+        deviceId = createTime + "";
         this.context = context.getApplicationContext();
         monitor = new DeviceMonitorImpl(this);
         monitor.setListener(new DeviceIdleListener() {
@@ -125,5 +129,10 @@ public abstract class AbstractDevice implements IDevice {
     @Override
     public String getDeviceId() {
         return deviceId;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+        deviceId = this.category + "_" + createTime;
     }
 }

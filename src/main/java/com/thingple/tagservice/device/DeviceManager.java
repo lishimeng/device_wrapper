@@ -63,11 +63,12 @@ public class DeviceManager {
     }
 
     private IDevice createDevice(String category) {
-        IDevice device = null;
+        AbstractDevice device = null;
         try {
             Class<? extends AbstractDevice> clazz = clazzMap.get(category);
             Constructor<? extends AbstractDevice> constructor = clazz.getConstructor(Context.class);
             device = constructor.newInstance(context);
+            device.setCategory(category);
         } catch (Exception e) {
             Log.e(getClass().getName() + "#createDevice", "Failed to create device instance", e);
         }
