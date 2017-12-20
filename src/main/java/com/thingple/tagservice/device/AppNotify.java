@@ -9,11 +9,11 @@ import static android.content.Context.VIBRATOR_SERVICE;
  *
  * Created by lism on 2017/8/15.
  */
-class AppNotify {
+public class AppNotify {
 
     private Context context;
 
-    AppNotify(Context context) {
+    public AppNotify(Context context) {
         this.context = context;
         init();
     }
@@ -21,7 +21,7 @@ class AppNotify {
     private void init() {
     }
 
-    void start() {
+    public void start() {
         long[] pattern = {1000, 400, 1000, 400};
         Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (vibrator != null) {
@@ -29,7 +29,7 @@ class AppNotify {
         }
     }
 
-    void destroy() {
+    public void destroy() {
         Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (vibrator != null) {
             vibrator.cancel();

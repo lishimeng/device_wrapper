@@ -11,7 +11,7 @@ import com.thingple.tag.operator.DeviceApp;
 import com.thingple.tag.wrapper.R;
 import com.thingple.tagservice.ReadCardListener;
 import com.thingple.tagservice.device.DeviceCategory;
-import com.thingple.tagservice.device.DeviceContext;
+import com.thingple.tagservice.device.context.DeviceContext;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.thingple.tagservice.IDeviceService;
-import com.thingple.tagservice.device.DeviceContext;
+import com.thingple.tagservice.device.context.DeviceContext;
 import com.thingple.tagservice.device.DeviceManager;
 
 

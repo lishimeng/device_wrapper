@@ -1,4 +1,4 @@
-package com.thingple.tagservice.device;
+package com.thingple.tagservice.device.context;
 
 import android.content.Context;
 import android.content.IntentFilter;
@@ -6,6 +6,10 @@ import android.os.Binder;
 import android.util.Log;
 
 import com.thingple.tagservice.HeartBeatReciever;
+import com.thingple.tagservice.device.AppNotify;
+import com.thingple.tagservice.device.DeviceManager;
+import com.thingple.tagservice.device.DeviceMonitor;
+import com.thingple.tagservice.device.IDevice;
 import com.thingple.tagservice.device.impl.DeviceMonitorImpl;
 
 

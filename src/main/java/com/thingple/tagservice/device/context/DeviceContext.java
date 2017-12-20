@@ -1,4 +1,4 @@
-package com.thingple.tagservice.device;
+package com.thingple.tagservice.device.context;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.util.Log;
 import com.thingple.tagservice.ReadCardHandler;
 import com.thingple.tagservice.ReadCardListener;
 import com.thingple.tagservice.WriteCardListener;
+import com.thingple.tagservice.device.DeviceManager;
+import com.thingple.tagservice.device.IDevice;
 import com.thingple.tagservice.device.vendor.AbstractDevice;
 
 

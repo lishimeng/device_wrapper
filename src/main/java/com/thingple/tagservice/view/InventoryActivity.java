@@ -8,7 +8,7 @@ import android.util.Log;
 import com.thingple.tag.operator.DeviceApp;
 import com.thingple.tag.wrapper.R;
 import com.thingple.tagservice.device.DeviceCategory;
-import com.thingple.tagservice.device.DeviceContext;
+import com.thingple.tagservice.device.context.DeviceContext;
 
 
 public class InventoryActivity extends BaseActivity {

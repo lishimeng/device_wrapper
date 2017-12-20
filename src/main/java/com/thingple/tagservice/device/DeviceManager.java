@@ -22,8 +22,8 @@ public class DeviceManager {
 
     private Context context;
 
-    public static Map<String, Class<? extends AbstractDevice>> clazzMap = new HashMap<>();
-    public static Map<String, IDevice> deviceMap = new HashMap<>();
+    private static Map<String, Class<? extends AbstractDevice>> clazzMap = new HashMap<>();
+    private static Map<String, IDevice> deviceMap = new HashMap<>();
 
     public static void init(Context context) {
         if (ins == null) {
@@ -101,5 +101,13 @@ public class DeviceManager {
             ins = null;
             deviceManager.destroySelf();
         }
+    }
+
+    public static void registerDevice(String category, AbstractDevice device) {
+        deviceMap.put(category, device);
+    }
+
+    public static void registerDevice(String category, Class<? extends AbstractDevice> clazz) {
+        clazzMap.put(category, clazz);
     }
 }

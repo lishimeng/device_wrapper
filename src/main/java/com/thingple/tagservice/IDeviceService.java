@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
-import com.thingple.tagservice.device.DeviceContext;
+import com.thingple.tagservice.device.context.DeviceContext;
 
 
 /**

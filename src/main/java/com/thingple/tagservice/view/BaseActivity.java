@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.thingple.tag.operator.DeviceApp;
-import com.thingple.tagservice.device.DeviceContext;
+import com.thingple.tagservice.device.context.DeviceContext;
 
 
 /**
