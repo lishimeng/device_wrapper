@@ -6,6 +6,8 @@ import android.util.Log;
 import com.thingple.tagservice.device.vendor.AbstractDevice;
 
 import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * RFID设备管理器
@@ -20,9 +22,8 @@ public class DeviceManager {
 
     private Context context;
 
-    public IDevice device;
-
-    public static Class<? extends AbstractDevice> clazz;
+    public static Map<String, Class<? extends AbstractDevice>> clazzMap = new HashMap<>();
+    public static Map<String, IDevice> deviceMap = new HashMap<>();
 
     public static void init(Context context) {
         if (ins == null) {
@@ -38,23 +39,32 @@ public class DeviceManager {
         this.context = context;
     }
 
-    public IDevice getDevice() {
+    public IDevice getDevice(String category) {
+        IDevice device = getCachedDevice(category);
         if (device == null) {
             synchronized (lock) {
-                initDevice();
+                initDevice(category);
             }
         }
         return device;
     }
 
-    public void initDevice() {
-        if (this.device == null) {
-            device = createDevice();
+    private IDevice getCachedDevice(String category) {
+        return deviceMap.get(category);
+    }
+
+    private void initDevice(String category) {
+        IDevice device = getCachedDevice(category);
+        if (device == null) {
+            device = createDevice(category);
+            deviceMap.put(category, device);
         }
     }
 
-    private IDevice createDevice() {
+    private IDevice createDevice(String category) {
+        IDevice device = null;
         try {
+            Class<? extends AbstractDevice> clazz = clazzMap.get(category);
             Constructor<? extends AbstractDevice> constructor = clazz.getConstructor(Context.class);
             device = constructor.newInstance(context);
         } catch (Exception e) {
@@ -64,17 +74,20 @@ public class DeviceManager {
         return device;
     }
 
-    public void destroySelf() {
+    private void destroySelf() {
 
         this.context = null;
-        closeDevice();
+        for (String category : deviceMap.keySet()) {
+            IDevice device = deviceMap.get(category);
+            deviceMap.remove(category);
+            closeDevice(device);
+        }
     }
 
-    void closeDevice() {
+    private void closeDevice(IDevice device) {
         if (device != null) {
-            IDevice d = device;
-            device = null;
-            d.closeDevice();
+            device.getMonitor().cancel();
+            device.closeDevice();
         }
     }
 

@@ -6,9 +6,12 @@ import android.util.Log;
 
 import com.thingple.tagservice.Common;
 import com.thingple.tagservice.WriteCardListener;
+import com.thingple.tagservice.device.DeviceIdleListener;
+import com.thingple.tagservice.device.DeviceMonitor;
 import com.thingple.tagservice.device.IDevice;
 import com.thingple.tagservice.device.TagInfo;
 import com.thingple.tagservice.device.TagMessageBuilder;
+import com.thingple.tagservice.device.impl.DeviceMonitorImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,13 +31,25 @@ public abstract class AbstractDevice implements IDevice {
 
     private Map<String, Long> map = null;
 
+    private DeviceMonitor monitor;
+
+    private String deviceId = "";
+
     static {
         Common.hexStr2Bytes("00000000", defaultPassword, 0, 4);
     }
 
     public AbstractDevice(Context context) {
         lastVisit = System.currentTimeMillis();
+        deviceId = System.currentTimeMillis() + "";
         this.context = context.getApplicationContext();
+        monitor = new DeviceMonitorImpl(this);
+        monitor.setListener(new DeviceIdleListener() {
+            @Override
+            public void onIdleTimeout() {
+                closeDevice();
+            }
+        });
     }
 
     @Override
@@ -92,5 +107,23 @@ public abstract class AbstractDevice implements IDevice {
         }
         Log.d(getClass().getName() + "#processTag", "读到标签 tid:" + tagInfo.tid + "\tepc:" + tagInfo.epc);
         TagMessageBuilder.newInstance().tid(tagInfo.tid).epc(tagInfo.epc).rssi(tagInfo.rssi).build(handler);
+    }
+
+    @Override
+    public void closeDevice() {
+        monitor.cancel();
+        close();
+    }
+
+    protected abstract void close();
+
+    @Override
+    public DeviceMonitor getMonitor() {
+        return monitor;
+    }
+
+    @Override
+    public String getDeviceId() {
+        return deviceId;
     }
 }

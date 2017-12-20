@@ -26,7 +26,8 @@ public class DeviceContext extends AbstractDeviceContext {
     /**
      * 开始盘点操作
      */
-    public void inventoryStart(String filterExp, int power) {
+    public void inventoryStart(String filterExp, int power, String deviceCategory) {
+        this.category = deviceCategory;
         IDevice device = getAvailableDevice();
         if (device == null) {
             return;
@@ -77,7 +78,7 @@ public class DeviceContext extends AbstractDeviceContext {
                     inventoryStop();
                 } else {
                     // mark visit time
-                    IDevice device = DeviceManager.shareInstance().getDevice();
+                    IDevice device = DeviceManager.shareInstance().getDevice(category);
                     if (device != null && device instanceof AbstractDevice) {
                         AbstractDevice abstractDevice = (AbstractDevice) device;
                         abstractDevice.markVisit();
@@ -88,8 +89,9 @@ public class DeviceContext extends AbstractDeviceContext {
         }, 500);
     }
 
-    public void inventoryOnce(ReadCardListener callback, String filterExp, int power) {
+    public void inventoryOnce(ReadCardListener callback, String filterExp, int power, String deviceCategory) {
 
+        this.category = deviceCategory;
         IDevice device = getAvailableDevice();
         if (device == null) {
             return;
@@ -104,14 +106,15 @@ public class DeviceContext extends AbstractDeviceContext {
      */
     public void inventoryStop() {
         notify.destroy();
-        IDevice device = DeviceManager.shareInstance().getDevice();
+        IDevice device = DeviceManager.shareInstance().getDevice(category);
         if (device != null) {
             device.stopInventory();
         }
     }
 
-    public void writeCard(final WriteCardListener callback, String epcForSelect, String data, String password, int power) {
+    public void writeCard(final WriteCardListener callback, String epcForSelect, String data, String password, int power, String deviceCategory) {
 
+        this.category = deviceCategory;
         IDevice device = getAvailableDevice();
         if (device != null) {
             device.configPower(power);

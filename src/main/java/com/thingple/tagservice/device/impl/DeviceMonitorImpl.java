@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.thingple.tagservice.device.DeviceIdleListener;
-import com.thingple.tagservice.device.DeviceManager;
 import com.thingple.tagservice.device.DeviceMonitor;
 import com.thingple.tagservice.device.IDevice;
 
@@ -19,6 +18,12 @@ public class DeviceMonitorImpl implements DeviceMonitor {
 
     private boolean isCanceled = false;
 
+    private IDevice device;
+
+    public DeviceMonitorImpl(IDevice device) {
+        this.device = device;
+    }
+
     /**
      * 经过一段时间不使用后,关闭设备
      */
@@ -29,12 +34,7 @@ public class DeviceMonitorImpl implements DeviceMonitor {
                 started = false;
                 return;
             }
-            IDevice device = DeviceManager.shareInstance().device;
-            if (device == null) {
-                Log.d(getClass().getName() + "", "设备监控器:设备已经关闭,停止监控");
-                return;
-            }
-            if (isTimeout(device)) {
+            if (isTimeout()) {
                 if (listener != null) {
                     listener.onIdleTimeout();
                 }
@@ -47,9 +47,9 @@ public class DeviceMonitorImpl implements DeviceMonitor {
 
         }
 
-        private boolean isTimeout(IDevice device) {
+        private boolean isTimeout() {
             long idleTime = System.currentTimeMillis() - device.lastVisit();
-            Log.d(getClass().getName() + "", "设备监控器:设备空闲时间:" + idleTime);
+            Log.d(device.getDeviceId(), "设备监控器:设备空闲时间:" + idleTime);
             return idleTime > TIMEOUT * 1000;
         }
     };
@@ -68,6 +68,7 @@ public class DeviceMonitorImpl implements DeviceMonitor {
     }
 
     public void cancel() {
+        Log.d(device.getDeviceId(), "设备监控器:停止");
         this.isCanceled = false;
     }
 

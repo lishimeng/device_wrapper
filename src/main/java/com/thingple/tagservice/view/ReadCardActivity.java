@@ -10,11 +10,14 @@ import android.widget.TextView;
 import com.thingple.tag.operator.DeviceApp;
 import com.thingple.tag.wrapper.R;
 import com.thingple.tagservice.ReadCardListener;
+import com.thingple.tagservice.device.DeviceCategory;
 import com.thingple.tagservice.device.DeviceContext;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadCardActivity extends BaseActivity {
+
+    private String defaultCategory = DeviceCategory.UHF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +67,16 @@ public class ReadCardActivity extends BaseActivity {
     private void doReadCard(final DeviceApp app, final int power) {
         Bundle bundle = getIntent().getExtras();
         String filter = null;
+        String category = null;
         if (bundle != null) {
             filter = bundle.getString("filter");
             filter = filter == null || filter.trim().equals("") ? null : filter;
+            category = bundle.getString("category");
         }
         final String filterExp = filter;
 
         final Handler handler = new Handler();
+        final String deviceCategory = category != null ? category : defaultCategory;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -79,7 +85,7 @@ public class ReadCardActivity extends BaseActivity {
                     TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
                     lableStatus.setText(R.string.status_reading);
                     ReadCardListener listener = createListener();
-                    deviceContext.inventoryOnce(listener, filterExp, power);
+                    deviceContext.inventoryOnce(listener, filterExp, power, deviceCategory.toLowerCase());
                 } else {
                     TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
                     lableStatus.setText(R.string.status_initial);

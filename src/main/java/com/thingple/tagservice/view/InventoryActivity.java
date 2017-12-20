@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.thingple.tag.operator.DeviceApp;
 import com.thingple.tag.wrapper.R;
+import com.thingple.tagservice.device.DeviceCategory;
 import com.thingple.tagservice.device.DeviceContext;
 
 
@@ -40,7 +41,7 @@ public class InventoryActivity extends BaseActivity {
                 DeviceContext deviceContext = getDeviceContext(app);
                 if (deviceContext != null) {
                     Log.d("inventory_view", "-->设备正常,开始Inventory");
-                    deviceContext.inventoryStart(filterExp, power);
+                    deviceContext.inventoryStart(filterExp, power, DeviceCategory.UHF);
                     resultToParent();
                 } else {
                     Log.d("inventory_view", "等待设备启动");

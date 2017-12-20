@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.thingple.tag.operator.DeviceApp;
 import com.thingple.tag.wrapper.R;
 import com.thingple.tagservice.WriteCardListener;
+import com.thingple.tagservice.device.DeviceCategory;
 import com.thingple.tagservice.device.DeviceContext;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -87,7 +88,7 @@ public class WriteCardActivity extends BaseActivity {
                     TextView lableStatus = (TextView) findViewById(R.id.label_write_status);
                     lableStatus.setText(R.string.status_writing);
                     WriteCardListener listener = createListener();
-                    deviceContext.writeCard(listener, filter, data, passwd, power);
+                    deviceContext.writeCard(listener, filter, data, passwd, power, DeviceCategory.UHF);
                 } else {
                     TextView lableStatus = (TextView) findViewById(R.id.label_write_status);
                     lableStatus.setText(R.string.status_initial);

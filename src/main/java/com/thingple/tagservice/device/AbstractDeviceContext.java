@@ -25,9 +25,9 @@ public class AbstractDeviceContext extends Binder {
 
     HeartBeatReciever heartBeatReciever;
 
-    private DeviceMonitor monitor;
-
     AppNotify notify;
+
+    String category = null;
 
     AbstractDeviceContext(Context context) {
         this.context = context;
@@ -40,13 +40,6 @@ public class AbstractDeviceContext extends Binder {
         intentFilter.addAction(INVENTORY_HEARTBEAT_ACTION);
         context.registerReceiver(this.heartBeatReciever, intentFilter, INVENTORY_HEARTBEAT_PERMISSION, null);
 
-        monitor = new DeviceMonitorImpl();
-        monitor.setListener(new DeviceIdleListener() {
-            @Override
-            public void onIdleTimeout() {
-                closeDevice();
-            }
-        });
     }
 
     public Context getContext() {
@@ -54,7 +47,7 @@ public class AbstractDeviceContext extends Binder {
     }
 
     IDevice getAvailableDevice() {
-        IDevice device = DeviceManager.shareInstance().getDevice();
+        IDevice device = DeviceManager.shareInstance().getDevice(category);
         if (device == null) {
             return null;
         }
@@ -62,6 +55,7 @@ public class AbstractDeviceContext extends Binder {
             device.openDevice();
         }
 
+        DeviceMonitor monitor = device.getMonitor();
         if (!monitor.isStarted()) {// 打开设备后同时开始监控设备空闲状态,及时关闭
             monitor.start();
         }
@@ -77,20 +71,7 @@ public class AbstractDeviceContext extends Binder {
         this.heartBeatReciever = null;
         context.unregisterReceiver(bhr);
 
-        this.monitor.cancel();
-        this.monitor = null;
-
-        closeDevice();
-    }
-
-    /**
-     * 关闭设备
-     */
-    private void closeDevice() {
-        IDevice device = DeviceManager.shareInstance().getDevice();
-        if (device != null) {
-            device.closeDevice();
-        }
+        DeviceManager.destroy();
     }
 
 }

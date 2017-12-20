@@ -67,4 +67,8 @@ public interface IDevice {
      * @return true/false
      */
     void writeCard(String epc, String data, String passwd, WriteCardListener callback);
+
+    DeviceMonitor getMonitor();
+
+    String getDeviceId();
 }
