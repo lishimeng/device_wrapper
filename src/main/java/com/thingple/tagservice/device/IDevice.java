@@ -2,6 +2,7 @@ package com.thingple.tagservice.device;
 
 import android.os.Handler;
 
+import com.thingple.tagservice.ReadCardListener;
 import com.thingple.tagservice.WriteCardListener;
 import com.thingple.tagservice.device.vendor.TagArea;
 
@@ -58,6 +59,15 @@ public interface IDevice {
      * @return true/false
      */
     void writeCard(String epc, TagArea area, String data, String passwd, WriteCardListener callback);
+
+    /**
+     * 读卡
+     * @param filter for select
+     * @param area 区域
+     * @param passwd 密码
+     * @param callback 回调
+     */
+    void readCard(String filter, TagArea area, int begin, int word, String passwd, ReadCardListener callback);
 
     /**
      * 写卡/默认epc

@@ -6,15 +6,27 @@ package com.thingple.tagservice.device.vendor;
  */
 public enum TagArea {
 
-    TID(1),EPC(2),USER(3);
+    EPC(1), TID(2), USER(3);
 
     private int bank;
 
-    private TagArea(int bank) {
+    TagArea(int bank) {
         this.bank = bank;
     }
 
     public int getBank() {
         return bank;
+    }
+
+    public static TagArea getBank(int bank) {
+        if (bank == 1) {
+            return EPC;
+        } else if (bank == 2) {
+            return TID;
+        } else if (bank == 3) {
+            return USER;
+        } else {
+            return null;
+        }
     }
 }

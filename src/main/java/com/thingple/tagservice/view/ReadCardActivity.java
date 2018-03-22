@@ -68,12 +68,32 @@ public class ReadCardActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         String filter = null;
         String category = null;
+        int bank = -1;// <0无效
+        int begin = -1;// <0无效
+        int words = -1;// <0无效
+        String password = null;
         if (bundle != null) {
             filter = bundle.getString("filter");
             filter = filter == null || filter.trim().equals("") ? null : filter;
             category = bundle.getString("category");
+
+            // -读区域参数----------------------------------------
+            bank = bundle.getInt("bank", -1);
+            begin = bundle.getInt("begin", -1);
+            words = bundle.getInt("words", -1);
+            password = bundle.getString("password");
+            // --------------------------------------------------
+        }
+        if (bank > -1) {
+            if (begin < 0 || words <= 0 || filter == null) {// 条件不满足
+                return;
+            }
         }
         final String filterExp = filter;
+        final int bankIndex = bank;
+        final int beginIndex = begin;
+        final int len = words;
+        final String passwd = password;
 
         final Handler handler = new Handler();
         final String deviceCategory = category != null ? category : defaultCategory;
@@ -85,7 +105,11 @@ public class ReadCardActivity extends BaseActivity {
                     TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
                     lableStatus.setText(R.string.status_reading);
                     ReadCardListener listener = createListener();
-                    deviceContext.inventoryOnce(listener, filterExp, power, deviceCategory.toLowerCase());
+                    if (bankIndex > -1) {// 读区域
+                        deviceContext.readArea(listener, filterExp, bankIndex, beginIndex, len, passwd, power, deviceCategory.toLowerCase());
+                    } else {// 查找卡
+                        deviceContext.inventoryOnce(listener, filterExp, power, deviceCategory.toLowerCase());
+                    }
                 } else {
                     TextView lableStatus = (TextView) findViewById(R.id.label_read_status);
                     lableStatus.setText(R.string.status_initial);

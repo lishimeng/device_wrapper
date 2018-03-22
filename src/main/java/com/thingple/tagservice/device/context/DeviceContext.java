@@ -13,6 +13,7 @@ import com.thingple.tagservice.WriteCardListener;
 import com.thingple.tagservice.device.DeviceManager;
 import com.thingple.tagservice.device.IDevice;
 import com.thingple.tagservice.device.vendor.AbstractDevice;
+import com.thingple.tagservice.device.vendor.TagArea;
 
 
 /**
@@ -122,6 +123,32 @@ public class DeviceContext extends AbstractDeviceContext {
             device.configPower(power);
             device.writeCard(epcForSelect, data, password, callback);
         }
+    }
+
+    /**
+     * 读区域的值
+     * @param callback 回调
+     * @param filterExp select
+     * @param bank 区域
+     * @param begin 开始地址
+     * @param word 字数
+     * @param passwd 密码
+     * @param power 功率
+     * @param deviceCategory 类型
+     */
+    public void readArea(ReadCardListener callback, String filterExp, int bank, int begin, int word, String passwd, int power, String deviceCategory) {
+        this.category = deviceCategory;
+        IDevice device = getAvailableDevice();
+        if (device == null) {
+            return;
+        }
+        TagArea area = TagArea.getBank(bank);
+        if (area == null) {
+            return;
+        }
+
+        device.configPower(power);
+        device.readCard(filterExp, area, begin, word, passwd, callback);
     }
 
     /**

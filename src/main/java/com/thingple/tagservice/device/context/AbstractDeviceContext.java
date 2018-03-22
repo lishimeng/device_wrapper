@@ -10,7 +10,6 @@ import com.thingple.tagservice.device.AppNotify;
 import com.thingple.tagservice.device.DeviceManager;
 import com.thingple.tagservice.device.DeviceMonitor;
 import com.thingple.tagservice.device.IDevice;
-import com.thingple.tagservice.device.impl.DeviceMonitorImpl;
 
 
 /**
