@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">device-wrapper</string>
+    <string name="title">RFID</string>
+    <string name="read_card_label">读卡</string>
+    <string name="status_reading">读卡</string>
+    <string name="status_initial">设备启动</string>
+    <string name="status_writing">写卡</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
