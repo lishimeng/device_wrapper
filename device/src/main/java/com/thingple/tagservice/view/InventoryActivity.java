@@ -29,11 +29,15 @@ public class InventoryActivity extends BaseActivity {
     private void doInventory(final DeviceApp app, final int power) {
         Bundle bundle = getIntent().getExtras();
         String filter = null;
+        String category = null;
         if (bundle != null) {
             filter = bundle.getString("filter");
             filter = filter == null || filter.trim().equals("") ? null : filter;
+            category = bundle.getString("category");
+            category = category == null || category.trim().equals("") ? DeviceCategory.UHF : category;
         }
         final String filterExp = filter;
+        final String deviceCategory = category;
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -41,7 +45,7 @@ public class InventoryActivity extends BaseActivity {
                 DeviceContext deviceContext = getDeviceContext(app);
                 if (deviceContext != null) {
                     Log.d("inventory_view", "-->设备正常,开始Inventory");
-                    deviceContext.inventoryStart(filterExp, power, DeviceCategory.UHF);
+                    deviceContext.inventoryStart(filterExp, power, deviceCategory);
                     resultToParent();
                 } else {
                     Log.d("inventory_view", "等待设备启动");
