@@ -47,7 +47,8 @@ public class DeviceContext extends AbstractDeviceContext {
                     Bundle bundle = msg.getData();
                     String tid = bundle.getString("TID");
                     String epc = bundle.getString("EPC");
-                    onInventory(tid, epc);
+                    String rssi = bundle.getString("RSSI");
+                    onInventory(tid, epc, rssi);
                 }
                 return false;
             }
@@ -156,13 +157,14 @@ public class DeviceContext extends AbstractDeviceContext {
      * @param tid tid
      * @param epc epc
      */
-    private void onInventory(String tid, String epc) {
+    private void onInventory(String tid, String epc, String rssi) {
         Intent intent = new Intent(INVENTORY_ACTION);
 
         if (tid != null) {
             intent.putExtra("TID", tid);
         }
         intent.putExtra("EPC", epc);
+        intent.putExtra("RSSI",rssi);
         Log.d(getClass().getName() + "#onInventory", "发送广播Action:" + INVENTORY_ACTION + "\tPermission:" + INVENTORY_PERMISSION);
         getContext().sendBroadcast(intent, INVENTORY_PERMISSION);
     }
