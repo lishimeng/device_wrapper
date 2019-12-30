@@ -35,15 +35,15 @@ public class DeviceContext extends AbstractDeviceContext {
         if (device == null) {
             return;
         }
-
-        notify.start();
-
+        if(this.category != "barcode"){
+            notify.start();
+        }
+        //notify.start();
         Handler inventoryHandler = new Handler(new Handler.Callback() {
 
             @Override
             public boolean handleMessage(Message msg) {
                 if (msg.what == IDevice.MEG) {
-
                     Bundle bundle = msg.getData();
                     String tid = bundle.getString("TID");
                     String epc = bundle.getString("EPC");
@@ -109,7 +109,9 @@ public class DeviceContext extends AbstractDeviceContext {
      * 主动调用停止inventory
      */
     public void inventoryStop() {
-        notify.destroy();
+        if(this.category != "barcode"){
+            notify.destroy();
+        }
         IDevice device = DeviceManager.shareInstance().getDevice(category);
         if (device != null) {
             device.stopInventory();
