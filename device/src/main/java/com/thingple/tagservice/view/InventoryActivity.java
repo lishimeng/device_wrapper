@@ -45,6 +45,7 @@ public class InventoryActivity extends BaseActivity {
                 DeviceContext deviceContext = getDeviceContext(app);
                 if (deviceContext != null) {
                     Log.d("inventory_view", "-->设备正常,开始Inventory");
+
                     deviceContext.inventoryStart(filterExp, power, deviceCategory);
                     resultToParent();
                 } else {
