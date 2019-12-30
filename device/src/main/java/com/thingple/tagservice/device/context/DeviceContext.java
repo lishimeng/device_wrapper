@@ -35,7 +35,7 @@ public class DeviceContext extends AbstractDeviceContext {
         if (device == null) {
             return;
         }
-        if(this.category != "barcode"){
+        if(!"barcode".equals(this.category)){
             notify.start();
         }
         //notify.start();
@@ -109,7 +109,7 @@ public class DeviceContext extends AbstractDeviceContext {
      * 主动调用停止inventory
      */
     public void inventoryStop() {
-        if(this.category != "barcode"){
+        if(!"barcode".equals(this.category)){
             notify.destroy();
         }
         IDevice device = DeviceManager.shareInstance().getDevice(category);
